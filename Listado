@@ -1,0 +1,92 @@
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class List_questions extends JPanel implements ActionListener{
+
+	int respuestas_correctas;
+	Quiz quiz;	
+	int seleccionar;
+	boolean used;
+	JPanel qPanel=new JPanel(); //preguntas
+	JPanel aPanel=new JPanel(); //respuestas
+	JRadioButton[] respuesta;
+	ButtonGroup group=new ButtonGroup();
+	JPanel botPanel=new JPanel();
+	JButton next=new JButton("Siguiente");
+	JButton finish=new JButton("Finalizar");
+	
+	public static void main(String args[]){
+		JFrame frame=new JFrame("RadioButton Test");
+		frame.setSize(500,300);
+		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		frame.setResizable(true);
+		
+		String[] respuestas={"incorrecta1","correcta","incorrecta2"};
+		frame.add(new List_questions("¿Cual es la respuesta correcta?",respuesta,1));
+		
+		frame.setVisible(true);
+	}
+	
+	public List_questions(String q, String[] opciones, int ans, Quiz quiz){
+		this.quiz=quiz;
+		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+		respuestas_correctas=ans;
+                //preguntas
+		qPanel.add(new JLabel(q));
+		add(qPanel);
+		//respuestas
+		respuesta=new JRadioButton[opciones.length];
+		for(int i=0;i<opciones.length;i++){
+			respuesta[i]=new JRadioButton(opciones[i]);
+			respuesta[i].addActionListener(this);
+			group.add(respuesta[i]);
+			aPanel.add(respuesta[i]);
+		}
+		add(aPanel);
+		next.addActionListener(this);
+		finish.addActionListener(this);
+		botPanel.add(next);
+		botPanel.add(finish);
+		add(botPanel);
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		Object src=e.getSource();
+
+		if(src.equals(next)){
+			mostrarResultados();
+			if(seleccionar==respuestas_correctas){
+				used=true;
+				quiz.next();
+			}
+		}
+		if(src.equals(finish)){
+			quiz.mostrarResumen();
+		}
+		for(int i=0;i<respuesta.length;i++){
+			if(src==respuesta[i]){
+				seleccionar=i;
+			}
+		}
+	}
+	
+	public void mostrarResultados(){
+		String text=respuesta[seleccionar].getText();
+		quiz.total++;
+		if(seleccionar==respuestas_correctas){
+			JOptionPane.showMessageDialog(null,text+" ¡¡¡es correcta!!!\n¡¡¡¡Buen trabajo!!!!");
+		}else{
+			quiz.malas++;
+			JOptionPane.showMessageDialog(null,text+" ¡¡es incorrecta!!.\n¡¡Intenta de nuevo, no te rindas!!");
+		}
+	}
+}
