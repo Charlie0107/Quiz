@@ -1,0 +1,135 @@
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.CardLayout;
+import java.util.Random;
+import javax.swing.JOptionPane;
+
+public class Quiz extends JFrame{
+
+	JPanel p=new JPanel();
+	CardLayout cards=new CardLayout();
+	int numero_preguntas;
+	int errores=0;
+	int total=0;
+	
+	String[][] respuestas={
+		{"8","10","6","9"},
+		{"200","206","190","201"},
+		{"1995","1945","1941","1965"},
+		{"Dennis Ritchy","Brendan Eich","Robert","Mark Zuckerberg"},
+		{"Programacion Objetiva Obvia","No tiene significado","Programacion Orientada a Objetos","Programacion Orientada Visual"},
+		{"Verdadero","Falso"},
+		{"Verdadero","Falso"},
+		{"1859","2000","2007","1986"},
+		{"Richard","Linus Torvalds","Anna Tovald","Christopher Latham"},
+		{"Verdadero","Falso"},
+	};
+	
+	List_questions preguntas[]={
+		
+		new List_questions(
+			"¿Cuantos planetas tiene el sistema solar?",
+			respuestas[0],
+			0,this
+		),
+		new List_questions(
+			"¿Cuantos huesos tiene el cuerpo humano?",
+			respuestas[1],
+			1,this
+		),
+		new List_questions(
+			"¿En que año se invento la primera computadora?",
+			respuestas[2],
+			2,this
+		),
+		new List_questions(
+			"¿Quien creo Javascript?",
+			respuestas[3],
+			1,this
+		),
+		new List_questions(
+			"¿Que es POO?",
+			respuestas[4],
+			2,this
+		),
+		new List_questions(
+			"Verdadero o Falso: Leonard Kleinrock desarrollo el internet.",
+			respuestas[5],
+			0,this
+		),
+		new List_questions(
+			"Verdadero o Falso: 1900 se creo python.",
+			respuestas[6],
+			1,this
+		),
+		new List_questions(
+			"¿En que año se creo el sistema operativo IOS?",
+			respuestas[7],
+			2,this
+		),
+		new List_questions(
+			"¿Quien invento linux?",
+			respuestas[8],
+			1,this
+		),
+
+		new List_questions(
+			"Verdadero o Falso: Los programadores hoy en dia son muy demandados.",
+			respuestas[10],
+			0,this
+		
+		)
+	};
+
+	public static void main(String args[]){
+		new Quiz();
+	}
+	
+	public Quiz(){
+		super("Corevia");
+		setResizable(Verdadero);
+		setSize(500,300);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		p.setLayout(cards);
+		numero_preguntas=preguntas.length;
+		for(int i=0;i<numero_preguntas;i++){
+			p.add(preguntas[i],"q"+i);
+		}
+		Random r = new Random();
+		int i=r.nextInt(numero_preguntas);
+		cards.show(p,"q"+i);
+		add(p);
+		setVisible(Verdadero);
+	}
+	
+	public void next(){
+		if((errores_totales )==numero_preguntas){
+			showSummary();
+		}else{
+			Random r=new Random();
+			boolean found=Falso;
+			int i=0;
+			while(!found){
+				i=r.nextInt(numero_preguntas);
+				if(!preguntas[i].used){
+					found=Verdadero;
+				}
+			}
+			cards.show(p,"q"+i);
+		}
+	}
+	
+	public void showSummary(){
+  
+		JOptionPane.showMessageDialog(null,"¡Terminaste! Aqui estan tus resultados:"+
+			"\nTu respondiste "+errores+ " preguntas malas " +
+			"\nTu respondiste "+(errores_totales )+ " preguntas correctas " +
+			"\nPorcentaje de respuestas: \t\t"+(int)(((float)(errores_totales )/total)*100)+"%"
+      
+		);
+    
+		System.exit(0);
+    
+	}
+}
