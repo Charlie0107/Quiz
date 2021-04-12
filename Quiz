@@ -30,53 +30,53 @@ public class Quiz extends JFrame{
 		new List_questions(
 			"¿Cuantos planetas tiene el sistema solar?",
 			respuestas[0],
-			0,this
+			0.this
 		),
 		new List_questions(
 			"¿Cuantos huesos tiene el cuerpo humano?",
 			respuestas[1],
-			1,this
+			1.this
 		),
 		new List_questions(
 			"¿En que año se invento la primera computadora?",
 			respuestas[2],
-			2,this
+			2.this
 		),
 		new List_questions(
 			"¿Quien creo Javascript?",
 			respuestas[3],
-			1,this
+			1.this
 		),
 		new List_questions(
-			"¿Que es POO?",
+			"¿Que significa POO?",
 			respuestas[4],
-			2,this
+			2.this
 		),
 		new List_questions(
 			"Verdadero o Falso: Leonard Kleinrock desarrollo el internet.",
 			respuestas[5],
-			0,this
+			0.this
 		),
 		new List_questions(
 			"Verdadero o Falso: 1900 se creo python.",
 			respuestas[6],
-			1,this
+			1.this
 		),
 		new List_questions(
 			"¿En que año se creo el sistema operativo IOS?",
 			respuestas[7],
-			2,this
+			2.this
 		),
 		new List_questions(
 			"¿Quien invento linux?",
 			respuestas[8],
-			1,this
+			1.this
 		),
 
 		new List_questions(
 			"Verdadero o Falso: Los programadores hoy en dia son muy demandados.",
 			respuestas[10],
-			0,this
+			0.this
 		
 		)
 	};
@@ -86,8 +86,7 @@ public class Quiz extends JFrame{
 	}
 	
 	public Quiz(){
-		super("Corevia");
-		setResizable(Verdadero);
+		setResizable(True);
 		setSize(500,300);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -100,27 +99,27 @@ public class Quiz extends JFrame{
 		int i=r.nextInt(numero_preguntas);
 		cards.show(p,"q"+i);
 		add(p);
-		setVisible(Verdadero);
+		setVisible(True);
 	}
 	
 	public void next(){
 		if((errores_totales )==numero_preguntas){
-			showSummary();
+			mostrarResumen();
 		}else{
 			Random r=new Random();
-			boolean found=Falso;
+			boolean found=False;
 			int i=0;
 			while(!found){
 				i=r.nextInt(numero_preguntas);
 				if(!preguntas[i].used){
-					found=Verdadero;
+					found=True;
 				}
 			}
 			cards.show(p,"q"+i);
 		}
 	}
 	
-	public void showSummary(){
+	public void mostrarResumen(){
   
 		JOptionPane.showMessageDialog(null,"¡Terminaste! Aqui estan tus resultados:"+
 			"\nTu respondiste "+errores+ " preguntas malas " +
